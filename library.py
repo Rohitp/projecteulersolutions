@@ -49,3 +49,25 @@ def nthPrime(n):
             count = count + 1
         if count == n:
             return x
+
+# Used for decorator based memoization - @memoization
+# More reading about positional and non positional arguments here
+# https://medium.com/@nkhaja/memoization-and-decorators-with-python-32f607439f84
+
+def memoization(f):
+    memoize = {}
+
+    def helper(x, y):
+        if x not in memoize:
+            memoize[x] = f(x, y)
+        return memoize[x]
+    return helper
+
+class Memoize:
+    def __init__(self, func):
+        self.func = func
+        self.memoize = {}
+    def __call__(self, *args):
+        if args not in self.memoize:
+            self.memoize[args] = self.func(*args)
+        return self.memoize[args]
