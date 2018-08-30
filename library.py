@@ -1,5 +1,5 @@
 from math import ceil, sqrt, log
-from functools import reduce
+from functools import reduce, wraps
 
 # Input - number n
 # Output the factors of the number n in a set
@@ -62,6 +62,17 @@ def memoization(f):
             memoize[x] = f(x, y)
         return memoize[x]
     return helper
+
+
+def memoize(func):
+    cache = {}
+
+    def memoized_func(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        return cache[key]
+    return memoized_func
 
 class Memoize:
     def __init__(self, func):
